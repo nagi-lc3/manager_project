@@ -71,7 +71,7 @@ class Manager(models.Model):
     quited_at = models.DateTimeField(verbose_name='やめた時期', null=True, blank=True)
 
     def __str__(self):
-        return self.person
+        return str(self.person)
 
 
 class Worker(models.Model):
@@ -90,4 +90,4 @@ class Worker(models.Model):
     manager = models.ForeignKey(Manager, verbose_name='担当上司', on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.person
+        return str(self.person)

@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_NAME = os.path.basename(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'manager',
 ]
 
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,3 +121,55 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = '/var/www/{}/static'.format(PROJECT_NAME)
+
+
+###########
+# Logging #
+###########
+
+LOGGING = {
+    # バージョンは「1」固定
+    'version': 1,
+    # 既存のログ設定を無効化しない
+    'disable_existing_loggers': False,
+    # ログフォーマット
+    'formatters': {
+        # 開発用
+        'develop': {
+            'format': '%(asctime)s [%(levelname)s] %(pathname)s:%(lineno)d '
+                      '%(message)s'
+        },
+    },
+    # ハンドラ
+    'handlers': {
+        # コンソール出力用ハンドラ
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'develop',
+        },
+    },
+    # ロガー
+    'loggers': {
+        # 自作アプリケーション全般のログを拾うロガー
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        # Django本体が出すログ全般を拾うロガー
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        # 発行されるSQL文を出力するための設定
+        # 'django.db.backends': {
+        #     'handlers': ['console'],
+        #     'level': 'DEBUG',
+        #     'propagate': False,
+        # },
+    },
+}
