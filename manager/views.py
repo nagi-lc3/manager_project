@@ -11,7 +11,7 @@ class WorkerListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        workers = Worker.objects.all()
+        workers = Worker.objects.all().select_related('person')
         context['workers'] = workers
 
         return context

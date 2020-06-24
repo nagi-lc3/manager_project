@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 
+
 <head>
-    {% load staticfiles %}
+    {% load static %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,6 +37,7 @@
     <![endif]-->
 </head>
 
+
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default navbar-static-top manager-nav no-margin" role="navigation">
@@ -50,7 +52,8 @@
                 </div>
             </div>
         </nav>
-        {% block body %} {% endblock %}
+        {% block body %}
+        {% endblock %}
     </div>
 </body>
 
